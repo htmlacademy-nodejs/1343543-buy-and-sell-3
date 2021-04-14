@@ -1,0 +1,17 @@
+{
+  "name": "buy-and-sell",
+  "version": "1.0.0",
+  "description": "Куплю. Продам.",
+  "main": "./src/service/service.js",
+  "scripts": {
+    "test": "npm run eslint",
+    "eslint": "eslint --ext .js src/",
+    "start": "node ./src/service/service.js"
+  },
+  "author": "Дмитрий Халимов",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "7.24.0",
+    "eslint-config-htmlacademy": "3.0.0"
+  }
+}
