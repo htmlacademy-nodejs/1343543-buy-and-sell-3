@@ -8,6 +8,10 @@ const {
   shuffle,
 } = require(`../../utils`);
 
+const {
+  ExitCode
+} = require(`../../constants`);
+
 const FILE_NAME = `mocks.json`;
 
 const TITLES = [
@@ -16,6 +20,10 @@ const TITLES = [
   `Продам отличную подборку фильмов на VHS`,
   `Куплю антиквариат`,
   `Куплю породистого кота`,
+  `Продам коллекцию журналов «Огонёк».`,
+  `Отдам в хорошие руки подшивку «Мурзилка».`,
+  `Продам советскую посуду. Почти не разбита.`,
+  `Куплю детские санки.`
 ];
 
 const SENTENCES = [
@@ -29,6 +37,10 @@ const SENTENCES = [
   `Если найдёте дешевле — сброшу цену.`,
   `Таких предложений больше нет!`,
   `При покупке с меня бесплатная доставка в черте города.`,
+  `Кажется, что это хрупкая вещь.`,
+  `Мой дед не мог её сломать.`,
+  `Кому нужен этот новый телефон, если тут такое...`,
+  `Не пытайтесь торговаться. Цену вещам я знаю.`
 ];
 
 const CATEGORIES = [
@@ -65,7 +77,7 @@ const getPictureFileName = (number) => `item${number.toString().padStart(2, 0)}.
 const generateOffers = (count) => {
   if (count > MocksCount.MAX) {
     console.error(`Не больше 1000 объявлений`);
-    process.exit();
+    process.exit(ExitCode.error);
   }
 
   return Array(count).fill({}).map(() => ({
