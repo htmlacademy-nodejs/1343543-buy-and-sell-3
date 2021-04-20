@@ -8,7 +8,6 @@ const {
   shuffle,
 } = require(`../../utils`);
 
-const DEFAULT_COUNT = 1;
 const FILE_NAME = `mocks.json`;
 
 const TITLES = [
@@ -46,6 +45,10 @@ const OfferType = {
   SALE: `sale`,
 };
 
+const MocksCount = {
+  DEFAULT: 1,
+  MAX: 1000
+};
 
 const SumRestrict = {
   MIN: 1000,
@@ -59,22 +62,28 @@ const PictureRestrict = {
 
 const getPictureFileName = (number) => `item${number.toString().padStart(2, 0)}.jpg`;
 
-const generateOffers = (count) => (
-  Array(count).fill({}).map(() => ({
+const generateOffers = (count) => {
+  if (count > MocksCount.MAX) {
+    console.error(`Не больше 1000 объявлений`);
+    process.exit();
+  }
+
+  return Array(count).fill({}).map(() => ({
     category: [CATEGORIES[getRandomInt(0, CATEGORIES.length - 1)]],
     description: shuffle(SENTENCES).slice(1, 5).join(` `),
     picture: getPictureFileName(getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX)),
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
     type: OfferType[Object.keys(OfferType)[Math.floor(Math.random() * Object.keys(OfferType).length)]],
     sum: getRandomInt(SumRestrict.MIN, SumRestrict.MAX),
-  }))
-);
+  }));
+};
 
 module.exports = {
   name: `--generate`,
   run(args) {
+
     const [count] = args;
-    const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
+    const countOffer = Number.parseInt(count, 10) || MocksCount.DEFAULT;
     const content = JSON.stringify(generateOffers(countOffer));
 
     fs.writeFile(FILE_NAME, content, (err) => {
