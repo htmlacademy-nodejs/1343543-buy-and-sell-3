@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports.getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
