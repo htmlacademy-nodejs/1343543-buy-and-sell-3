@@ -1,17 +1,25 @@
 {
   "name": "buy-and-sell",
   "version": "1.0.0",
-  "description": "Куплю. Продам.",
-  "main": "./src/service/service.js",
-  "scripts": {
-    "test": "npm run eslint",
-    "eslint": "eslint --ext .js src/",
-    "start": "node ./src/service/service.js"
-  },
-  "author": "Дмитрий Халимов",
-  "license": "ISC",
+  "description": "Куплю. Продам",
+  "main": "./src/service/serives.js",
+  "dependencies": {},
   "devDependencies": {
     "eslint": "7.24.0",
     "eslint-config-htmlacademy": "3.0.0"
-  }
+  },
+  "scripts": {
+    "test": "npm run eslint",
+    "eslint": "eslint --ext .js src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmitrykhalimov/1343543-buy-and-sell-3.git"
+  },
+  "author": "Дмитрий Халимов",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmitrykhalimov/1343543-buy-and-sell-3/issues"
+  },
+  "homepage": "https://github.com/dmitrykhalimov/1343543-buy-and-sell-3#readme"
 }
