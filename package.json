@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Куплю. Продам",
   "main": "./src/service/serives.js",
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "4.1.1"
+  },
   "devDependencies": {
     "eslint": "7.24.0",
     "eslint-config-htmlacademy": "3.0.0"
