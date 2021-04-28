@@ -80,7 +80,7 @@ module.exports = {
     const content = JSON.stringify(generateOffers({count: countOffer, sentences, titles, categories}));
 
     try {
-      await fs.writeFile(FILE_NAME, content, () => {});
+      await fs.writeFile(FILE_NAME, content);
       console.log(chalk.green(`Operation success. File created.`));
     } catch (err) {
       console.log(err);
