@@ -8,12 +8,6 @@ const mainRoutes = require(`./routes/main-routes`);
 
 const DEFAULT_PORT = 8080;
 
-// const Route = {
-//   offers: `/offers`,
-//   my: `/my`,
-//   root: `/`,
-// }
-
 const app = express();
 
 app.use(`/offers`, offersRoutes);
