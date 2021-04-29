@@ -4,7 +4,8 @@
   "description": "Куплю. Продам",
   "main": "./src/service/serives.js",
   "dependencies": {
-    "chalk": "4.1.1"
+    "chalk": "4.1.1",
+    "express": "4.17.1"
   },
   "devDependencies": {
     "eslint": "7.24.0",
@@ -13,6 +14,8 @@
   },
   "scripts": {
     "test": "npm run eslint",
+    "start": "node ./src/service/service.js",
+    "start-front-server": "node ./src/express/index.js",
     "server": "nodemon ./src/service/service.js --server 3000",
     "eslint": "eslint --ext .js src/"
   },
