@@ -15,7 +15,7 @@
   "scripts": {
     "test": "npm run eslint",
     "start": "node ./src/service/service.js",
-    "start-front-server": "node ./src/express/index.js",
+    "start-front-server": "nodemon ./src/express/index.js",
     "server": "nodemon ./src/service/service.js --server 3000",
     "eslint": "eslint --ext .js src/"
   },
