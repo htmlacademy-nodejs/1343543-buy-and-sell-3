@@ -5,7 +5,8 @@
   "main": "./src/service/serives.js",
   "dependencies": {
     "chalk": "4.1.1",
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "pug": "2.0.4"
   },
   "devDependencies": {
     "eslint": "7.24.0",
