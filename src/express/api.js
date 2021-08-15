@@ -8,7 +8,6 @@ const port = process.env.API_PORT || 3000;
 const defaultURL = `http://localhost:${port}/api/`;
 
 class API {
-
   constructor(baseURL, timeout) {
     this._http = axios.create({
       baseURL,
