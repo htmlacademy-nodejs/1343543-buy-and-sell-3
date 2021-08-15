@@ -4,6 +4,7 @@
   "description": "Куплю. Продам",
   "main": "./src/service/serives.js",
   "dependencies": {
+    "axios": "0.21.1",
     "chalk": "4.1.1",
     "cross-env": "7.0.3",
     "express": "4.17.1",
