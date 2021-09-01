@@ -24,8 +24,8 @@
   "scripts": {
     "test": "npm run eslint && npm run jest",
     "jest": "jest",
-    "start": "cross-env NODE_ENV=production nodemon ./src/service/service.js --server 3000",
-    "start::debug": "cross-env NODE_ENV=development nodemon ./src/service/service.js --server 3000",
+    "start": "cross-env NODE_ENV=production nodemon ./src/service/service.js",
+    "start::debug": "cross-env NODE_ENV=development nodemon ./src/service/service.js",
     "start-front-server": "nodemon ./src/express/index.js",
     "server": "nodemon ./src/service/service.js --server 3000",
     "eslint": "eslint --ext .js src/"
