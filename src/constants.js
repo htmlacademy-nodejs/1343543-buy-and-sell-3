@@ -7,8 +7,8 @@ const USER_ARGV_INDEX = 2;
 const MAX_ID_LENGTH = 6;
 
 const ExitCode = {
-  error: 1,
-  success: 0,
+  ERROR: 1,
+  SUCCESS: 0,
 };
 
 const HttpCode = {
