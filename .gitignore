@@ -16,3 +16,6 @@ mocks.json
 build/
 src/express/upload
 fill-db2.sql
+
+# Файл с переменными окружения
+.env
