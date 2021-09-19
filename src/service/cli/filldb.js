@@ -3,19 +3,21 @@
 // Подключаем модуль `fs`
 const fs = require(`fs/promises`);
 const chalk = require(`chalk`);
-const {nanoid} = require(`nanoid`);
+const sequelize = require(`../lib/sequelize`);
+const defineModels = require(`../models`);
+const Aliase = require(`../models/aliase`);
+const {getLogger} = require(`../lib/logger`);
 
 const {
   getRandomInt,
   shuffle,
 } = require(`../../utils`);
 
+const logger = getLogger({});
+
 const {
   ExitCode,
-  MAX_ID_LENGTH
 } = require(`../../constants`);
-
-const FILE_NAME = `mocks.json`;
 
 const FILE_SENTENCES_PATH = `./data/sentences.txt`;
 const FILE_TITLES_PATH = `./data/titles.txt`;
@@ -48,23 +50,38 @@ const getPictureFileName = (number) => `item${number.toString().padStart(2, 0)}.
 
 const generateComments = (count, comments) => (
   Array(count).fill({}).map(() => ({
-    id: nanoid(MAX_ID_LENGTH),
     text: shuffle(comments)
       .slice(0, getRandomInt(1, 3))
       .join(` `),
   }))
 );
 
+const getRandomSubarray = (items) => {
+  items = items.slice();
+  let count = getRandomInt(1, items.length - 1);
+  const result = [];
+  while (count--) {
+    result.push(
+        ...items.splice(
+            getRandomInt(0, items.length - 1), 1
+        )
+    );
+  }
+  return result;
+};
+
 const generateOffers = (params) => {
   const {count, comments, titles, categories, sentences} = params;
+
+  logger.info(params);
+
   if (count > MocksCount.MAX) {
     console.error(chalk.red(`Не больше 1000 объявлений`));
     process.exit(ExitCode.ERROR);
   }
 
   return Array(count).fill({}).map(() => ({
-    id: nanoid(MAX_ID_LENGTH),
-    category: [categories[getRandomInt(0, categories.length - 1)]],
+    category: getRandomSubarray(categories),
     description: shuffle(sentences).slice(1, 5).join(` `),
     picture: getPictureFileName(getRandomInt(PictureRestrict.MIN, PictureRestrict.MAX)),
     title: titles[getRandomInt(0, titles.length - 1)],
@@ -75,8 +92,21 @@ const generateOffers = (params) => {
 };
 
 module.exports = {
-  name: `--generate`,
+  name: `--filldb`,
   async run(args) {
+    try {
+      logger.info(`Trying to connect to database...`);
+      await sequelize.authenticate();
+    } catch (err) {
+      logger.error(`An error occurred: ${err.message}`);
+      process.exit(1);
+    }
+    logger.info(`Connection to database established`);
+
+    const {Category, Offer} = defineModels(sequelize);
+
+    await sequelize.sync({force: true});
+
     const readContent = async (filePath) => {
       try {
         const content = await fs.readFile(filePath, `utf8`);
@@ -94,16 +124,22 @@ module.exports = {
       readContent(FILE_CATEGORIES_PATH),
     ]);
 
+    logger.info(categories);
+
+    const categoryModels = await Category.bulkCreate(
+        categories.map((item) => ({name: item}))
+    );
+
     const [count] = args;
     const countOffer = Number.parseInt(count, 10) || MocksCount.DEFAULT;
-    const content = JSON.stringify(generateOffers({count: countOffer, sentences, titles, categories, comments}));
+    const offers = generateOffers({count: countOffer, sentences, titles, categories, comments});
 
-    try {
-      await fs.writeFile(FILE_NAME, content);
-      console.log(chalk.green(`Operation success. File created.`));
-    } catch (err) {
-      console.log(err);
-      console.error(chalk.red(`Can't write data to file...`));
-    }
+    console.log(offers);
+    const offerPromises = offers.map(async (offer) => {
+      const offerModel = await Offer.create(offer, {include: [Aliase.COMMENTS]});
+      await offerModel.addCategories(offer.categories);
+    });
+    await Promise.all(offerPromises);
+
   }
 };
