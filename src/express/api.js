@@ -24,6 +24,10 @@ class API {
     return this._load(`/offers`, {params: {comments}});
   }
 
+  getCategories(count) {
+    return this._load(`/category`, {params: {count}});
+  }
+
   getOffer(id) {
     return this._load(`/offers/${id}`);
   }
