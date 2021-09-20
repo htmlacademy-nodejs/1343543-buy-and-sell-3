@@ -20,8 +20,12 @@ class API {
     return response.data;
   }
 
-  getOffers() {
-    return this._load(`/offers`);
+  getOffers({comments}) {
+    return this._load(`/offers`, {params: {comments}});
+  }
+
+  getCategories(count) {
+    return this._load(`/category`, {params: {count}});
   }
 
   getOffer(id) {

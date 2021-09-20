@@ -59,7 +59,7 @@ const generateOffers = (params) => {
   const {count, comments, titles, categories, sentences} = params;
   if (count > MocksCount.MAX) {
     console.error(chalk.red(`Не больше 1000 объявлений`));
-    process.exit(ExitCode.error);
+    process.exit(ExitCode.ERROR);
   }
 
   return Array(count).fill({}).map(() => ({
